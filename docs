@@ -1,0 +1,271 @@
+# إعداد مستودع GitHub العام
+
+## إعدادات المستودع المقترحة
+
+- **Repository name:** `Kyrelix-Security-Advisor`
+- **Visibility:** `Public`
+- **About / Description:** `Kyrelix Security Advisor — Android account security insights, authenticator tools, and privacy-minded guidance. Official information and releases; source code is private.`
+- **Topics:** `android`, `security`, `authenticator`, `totp`, `hotp`, `passkeys`, `account-security`, `flutter`, `closed-source`
+- **Website:** يُترك فارغًا حتى يتوفر رابط رسمي حقيقي، أو يُضاف رابط موثوق لصفحة الإصدار عندما ينشر.
+- **License:** لا تُضف MIT أو GPL أو Apache؛ التطبيق مغلق المصدر. وضعنا ملف COPYRIGHT للتوضيح.
+- **Releases:** لا ترفع APK غير نهائي؛ أنشئ الإصدارات الرسمية عند الجاهزية فقط.
+
+## الخطوات
+
+1. افتح https://github.com/new وأنشئ مستودعًا عامًا بالاسم المقترح.
+2. لا تختَر قالب Flutter أو ترفع المشروع الحالي. أنشئ مستودعًا فارغًا.
+3. فك ZIP الذي أُعدّ لك **في مجلد مستقل تمامًا** عن مشروع Flutter، ثم ارفع ملفات الوثائق فقط باستخدام Add file → Upload files في المستودع الجديد.
+4. من إعدادات المستودع، فعّل **Private vulnerability reporting** إن كان الخيار متاحًا، وراجع إعدادات Issues/Discussions قبل استقبال البلاغات.
+5. راجع README والخصوصية وروابط الإصدارات حينما تتوفر فعليًا.
+6. إذا استخدمت رابط المستودع في حقل Homepage عند إنشاء GitHub OAuth App، تأكد أن المستودع موجود وعام أولًا. Device Flow نفسه لا يعتمد على callback URL.
+
+## ما يجب عدم رفعه
+
+`lib.zip`, `android.zip`, `assets.zip`, `test.zip`, `pubspec.yaml`, `pubspec.lock`, `.env`, `key.properties`, `upload-keystore.jks`, بيانات Appwrite، رموز OAuth، ملفات الحسابات والنسخ الاحتياطي، أرقام الهواتف أو البريد الحقيقي في لقطات الشاشة.
+
+## تنبيه مهم
+
+الـ `.gitignore` طبقة حماية إضافية فقط، **وليس ضمانًا** لمنع تسريب الملفات إذا رُفعت عبر واجهة GitHub أو أُجبر Git على إضافتها. أبقِ المستودع العام في مجلد منفصل ولا تنسخ إليه ملفات التطبيق إطلاقًا.
+
+## الاسم الداخلي للتطبيق
+
+حاليًا يحتوي `pubspec.yaml` على `name: secure_key` و`description: SecureKey authentication and security application.`. اسم مستودع GitHub واسم العرض العام يمكن أن يكونا **Kyrelix Security Advisor** دون تغيير `name` الداخلي الآن. تغيير اسم حزمة Android (`applicationId`) أو معرّفات Appwrite أو Google Play دون مراجعة تكاملاتها قد يؤدي إلى مشكلات ترحيل أو نشر. اجعل إعادة التسمية الداخلية عملًا منفصلًا يراجع قبل الإصدار.
+
+# Development roadmap / خارطة الطريق
+
+> Directional plans, not a release promise. The existence of a development stage does not mean its features have passed production security review.
+
+## Current focus
+
+- Account Security Advisor UI and status explanations
+- Password hint and generation experience
+- Provider-authorized account checks where supported, including GitHub
+- Appwrite account sessions: clear distinction between sessions and distinct devices
+
+## Planned before production release
+
+- Security notifications and change history
+- Appwrite security-data integration, access-control and audit review
+- End-to-end Android security, regression and performance testing
+- Google Play Billing migration and official eligible Play promotion codes
+- Privacy disclosure finalization and release provenance verification
+
+## Boundaries
+
+A provider login or OAuth approval does not automatically grant access to passkey enrollment, connected-device counts or 2FA status for every account. Unsupported findings must remain unavailable rather than being guessed.
+
+---
+
+هذه خارطة طريق مبدئية. لا تعني مرحلة تطوير منجزة أن التطبيق اجتاز تدقيق الأمان النهائي. سنحافظ على ميزات المصادقة القديمة وAppwrite، ونُدخل فحوصات الخدمات بالقدر الذي تتيحه واجهاتها الرسمية، ثم نراجع الاشتراكات عبر Google Play في مرحلة ما قبل النشر.
+
+# Privacy information — draft for publication review
+
+> **Not a finalized legal privacy policy.** This document describes design intentions and known integration categories. It must be reconciled with the production application, backend configuration, retention settings, analytics, support channels, and applicable law before release.
+
+## Known / planned data flows
+
+- **Authenticator data:** the app implements local authenticator storage. Detailed encryption, backups, synchronisation and retention claims require a production review.
+- **Provider authorization:** selected external-account integrations may receive authorized access tokens and query official APIs. Token storage, permission scope, revocation and expiration should be verified before release.
+- **Security findings:** the app may store account labels, result categories, and verification timestamps. A finding is not equivalent to comprehensive access to a provider account.
+- **Kyrelix account and sessions:** Appwrite is used for the application's account/backend features and may provide authenticated session metadata.
+- **Audit and subscription records:** the existing backend can process relevant audit events and subscription/account data; production retention, data recipients and lawful basis need confirmation.
+- **Notifications:** the project includes Firebase Cloud Messaging transport; exact notification data and user controls require review.
+- **Password suggestions:** intended to be produced locally; verify clipboard handling and any logging before public privacy claims.
+
+## Required before publishing a final privacy policy
+
+Confirm actual telemetry, external services and hosting locations, data retention/deletion workflows, access rights, support contact, controller identity, age policy where relevant, backup/sync behavior, payment processors and cross-border disclosures. Publish a verified policy URL before store submission.
+
+---
+
+# معلومات الخصوصية — مسودة تحتاج مراجعة
+
+هذه الوثيقة **ليست سياسة خصوصية قانونية نهائية**. تستخدم Kyrelix أدوات مصادقة محلية، وقد يتصل بواجهات الخدمات الرسمية بعد موافقة المستخدم. يعتمد المشروع على Appwrite في أجزاء من الحسابات والجلسات والسجلات، وعلى Firebase Cloud Messaging لنقل الإشعارات. قبل الإطلاق يجب التحقق من مكان تخزين كل فئة بيانات وفترة الاحتفاظ والجهات المستقبلة وآلية الحذف والتواصل، ثم إصدار سياسة خصوصية نهائية مطابقة للكود والإعدادات الفعلية.
+
+# Release policy / سياسة الإصدارات
+
+- Do not upload unreleased debug APKs, signing keys, keystores, service-account JSON files, tokens, database exports, configuration secrets, or full project archives.
+- Official builds, if published, should carry a clear version number, changelog, distribution channel, and independently verifiable signing/provenance information after the release process is established.
+- Do not announce a Play Store, Uptodown or GitHub Release link until it exists and has been verified.
+- Avoid publishing screenshots that contain real email addresses, phone numbers, authenticator QR codes, or session/device identifiers.
+
+---
+
+لا ترفع APK تجريبيًا أو مفاتيح التوقيع أو إعدادات الخادم أو أرشيف المشروع. الإصدارات الرسمية فقط هي التي تُعلن مع رقم الإصدار والمصدر الواضح، وبعد التحقق من الروابط والمعلومات الظاهرة في الصور.
+
+# Public documentation repository: avoid source-code or credential uploads.
+# Prefer a clean, separate directory instead of copying the Flutter project here.
+/lib/
+/android/
+/ios/
+/windows/
+/linux/
+/macos/
+/web/
+/test/
+/assets/
+/build/
+/.dart_tool/
+/.idea/
+/.vscode/
+/.gradle/
+/coverage/
+*.dart
+*.java
+*.kt
+*.kts
+*.swift
+*.m
+*.h
+*.so
+*.dll
+*.exe
+*.aab
+*.apk
+*.ipa
+*.jks
+*.keystore
+*.p12
+*.pem
+*.p8
+*.key
+key.properties
+*.env
+.env*
+*service-account*.json
+*google-services*.json
+*GoogleService-Info*.plist
+*.db
+*.sqlite
+*.log
+*.zip
+*.7z
+*.rar
+pubspec.yaml
+pubspec.lock
+firebase.json
+appwrite-functions/
+
+# Copyright and use / حقوق الملكية
+
+Kyrelix Security Advisor is proprietary, closed-source software. This GitHub repository contains public-facing documentation and project information only. No software license to the unreleased application source or binaries is granted by this repository.
+
+Trademarks, names, logos, and third-party libraries are governed by their respective owners' rights and licenses. Do not assume an official partnership with Google, GitHub, Microsoft, or Appwrite solely because integrations are mentioned.
+
+---
+
+Kyrelix Security Advisor برنامج مملوك ومغلق المصدر. يحتوي هذا المستودع على وثائق عامة فحسب، ولا يُمنح من خلاله ترخيص لإعادة استخدام الشيفرة أو توزيع التطبيق. الأسماء والشعارات والخدمات الخارجية تعود إلى أصحابها، وذكرها لا يعني وجود شراكة رسمية.
+
+<div align="center">
+
+# Kyrelix Security Advisor
+
+**Account security insights • Authentication tools • Privacy-minded Android experience**
+
+**Android** · **Closed source** · **In development**
+
+[العربية](README_AR.md) · [Security](SECURITY.md) · [Privacy overview](docs/PRIVACY.md) · [Roadmap](docs/ROADMAP.md)
+
+</div>
+
+## Overview
+
+**Kyrelix Security Advisor** is an Android application that brings account security guidance and authenticator utilities together. The goal is to help people understand their accounts' security posture, use stronger credentials, and find the appropriate official steps to improve protection.
+
+> **Important:** This is a public **information and release repository**, not the application source-code repository. This repository does not provide buildable Android or Flutter source code.
+
+## Main capabilities
+
+- **Authenticator tools:** TOTP/HOTP accounts and QR-based enrollment, including camera and gallery import.
+- **Account Security Advisor:** a central view of linked accounts and security findings.
+- **Official provider connections:** approved integrations may retrieve the security data that each provider API actually exposes; GitHub integration is under development/testing.
+- **Clear results:** verified positive, actionable warning, confirmed issue, permission/API unavailable, or not assessed. A missing permission is not proof of an insecure account.
+- **Password Advisor:** locally generated password suggestions with optional memorable hints. Password strength is not inferred from third-party account access.
+- **Passkey and device guidance:** links to official security settings where direct verification is not supported.
+- **Kyrelix sessions:** information about the application's own Appwrite sessions, when signed in; session counts are not necessarily distinct device counts.
+
+## How account checks work
+
+When a supported provider is connected and the user authorizes the requested permissions, Kyrelix attempts to retrieve **only the facts exposed by that provider's authorized API**. Results are shown automatically where implemented; they are not fabricated when access is unavailable. No universal third-party API can expose all connected devices, passkeys, passwords or authentication settings across all services.
+
+## Availability
+
+Development and testing are ongoing. No public download URL or store listing is claimed here until an official release is published. Check the [Releases](../../releases) section of this repository for announcements and verify release provenance before installing any APK.
+
+## Privacy and security
+
+See [Privacy overview](docs/PRIVACY.md) for the planned/known data categories and items requiring verification prior to launch. Please use the guidance in [SECURITY.md](SECURITY.md) to report security concerns **privately**. Never post TOTP seeds, recovery codes, access tokens, device session data, passwords or personal account details in public issues.
+
+## Development status
+
+The product is under active development. Features and integrations may vary by version and provider permissions. See the [Roadmap](docs/ROADMAP.md).
+
+## Proprietary software
+
+**Kyrelix Security Advisor is not open source.** Publishing project information on GitHub does not grant permission to access, copy, redistribute, modify, or reverse engineer proprietary application source code. See [COPYRIGHT.md](COPYRIGHT.md). Third-party components retain their own licenses.
+
+<div align="center">
+
+# Kyrelix Security Advisor
+
+**مستشار أمان الحسابات وأدوات المصادقة لنظام Android**
+
+**Android** · **مغلق المصدر** · **قيد التطوير**
+
+[English](README.md) · [الإبلاغ الأمني](SECURITY.md) · [الخصوصية](docs/PRIVACY.md) · [خارطة الطريق](docs/ROADMAP.md)
+
+</div>
+
+## عن التطبيق
+
+**Kyrelix Security Advisor** تطبيق أمني لأجهزة Android يهدف إلى جمع أدوات المصادقة ومستشار حماية الحسابات في تجربة واحدة واضحة؛ ليساعد المستخدم على فهم حالة الحماية والانتقال إلى الإعدادات الرسمية عند الحاجة.
+
+> **هذا المستودع للتعريف بالتطبيق ونشر معلومات الإصدارات فقط.** لا يحتوي على الشيفرة المصدرية لتطبيق Flutter أو Android، ولا على إعدادات الخادم أو مفاتيح حساسة.
+
+## الميزات
+
+- **مركز المصادقة:** حسابات TOTP/HOTP وإضافة الرموز عبر QR من الكاميرا أو المعرض وطرق الإدخال الموجودة في التطبيق.
+- **مستشار أمان الحسابات:** عرض الحسابات المرتبطة ونتائج الحماية والإجراءات المقترحة.
+- **فحص عبر تكاملات رسمية:** عند موافقة المستخدم وتوفر واجهة API مناسبة، تظهر بيانات أمنية متحقق منها؛ ويجري تطوير واختبار ربط GitHub.
+- **نتائج واضحة بالألوان:** الأخضر للحالة المؤكدة، والأصفر للحماية التي تحتاج انتباهًا، والأحمر للمشكلة المؤكدة، والبنفسجي عندما يتعذر الوصول إلى البيانات أو الصلاحيات، مع تمييز الحالات غير المقيّمة.
+- **مستشار كلمات المرور:** اقتراح كلمات مرور محليًا باستخدام تلميحات ذهنية اختيارية وعشوائية آمنة؛ لا نَدّعي قياس قوة كلمة المرور الموجودة في حساب خارجي دون بيانات متاحة.
+- **إرشادات Passkeys والأجهزة:** الانتقال إلى الإعدادات الرسمية عند عدم وجود واجهة مناسبة للفحص المباشر.
+- **جلسات Kyrelix:** عرض جلسات حساب التطبيق نفسه بواسطة Appwrite عند توفر تسجيل الدخول، مع توضيح أن عدد الجلسات لا يساوي بالضرورة عدد الأجهزة.
+
+## كيف يعمل الفحص؟
+
+عند ربط خدمة مدعومة والموافقة على الصلاحيات المطلوبة، يحاول المستشار جلب **المعلومات التي تسمح بها الواجهة الرسمية للخدمة فعلًا** وعرضها تلقائيًا. لا يعتبر غياب البيانات دليلًا على تعطيل المصادقة الثنائية، ولا يعرض أرقامًا تخمينية للأجهزة. بعض الخدمات لا تتيح لتطبيقات الطرف الثالث قراءة إعدادات 2FA أو Passkeys أو عدد الأجهزة.
+
+## التحميل والإصدارات
+
+التطبيق ما زال قيد التطوير والاختبار. لن نضع رابط تنزيل أو متجر غير مؤكد. ستُعلن الإصدارات الرسمية مستقبلًا في صفحة [Releases](../../releases) إذا تقرر نشرها هنا.
+
+## الأمان والخصوصية
+
+راجع [معلومات الخصوصية](docs/PRIVACY.md) وتوجيهات [الإبلاغ الأمني](SECURITY.md). لا تنشر مفاتيح TOTP أو كلمات المرور أو رموز الاسترداد أو رموز OAuth أو المعلومات الشخصية داخل البلاغات العامة.
+
+## حالة التطوير
+
+تُطوّر الميزات وتُختبر تدريجيًا. وقد تختلف بعض إمكانيات الفحص بحسب إصدار التطبيق والصلاحيات والجهة المزودة للخدمة. التفاصيل في [خارطة الطريق](docs/ROADMAP.md).
+
+## الملكية
+
+**المشروع مغلق المصدر.** النشر هنا لا يجعل التطبيق مفتوح المصدر، ولا يمنح ترخيصًا عامًا لتوزيع الشيفرة أو إعادة استخدامها. راجع [COPYRIGHT.md](COPYRIGHT.md). وتبقى تراخيص المكونات الخارجية لأصحابها.
+
+# Security policy / سياسة الأمان
+
+## Report privately / الإبلاغ بصورة خاصة
+
+Kyrelix Security Advisor is a security-sensitive application. **Do not disclose suspected vulnerabilities, PoC exploits, credentials, TOTP seeds, backups, recovery codes, OAuth tokens, device identifiers or private user data in public issues or discussions.**
+
+To report a security issue, use the repository's **Security → Report a vulnerability** option **after the repository owner enables GitHub Private Vulnerability Reporting**. If it is not enabled, do not post the issue publicly; contact the project owner using a verified private communication channel made available by the owner.
+
+Provide: affected app version, a brief explanation, steps to reproduce without real secrets, expected versus actual behavior, and impact. Remove personal data from screenshots and logs.
+
+The project is actively developed. No response-time or bug-bounty commitment is stated until a formal policy is announced.
+
+---
+
+هذا تطبيق ذو طبيعة أمنية. **لا تنشر الثغرات أو كلمات المرور أو أسرار OTP أو التوكنات أو البيانات الشخصية في GitHub Issues العامة.** استخدم خيار **Security ← Report a vulnerability** بعد تفعيل البلاغات الأمنية الخاصة من مالك المستودع. وإذا لم يكن متاحًا، استخدم قناة تواصل خاصة موثّقة يعلنها المالك، ولا تنشر البلاغ علنًا.
+
+اذكر إصدار التطبيق، وطريقة إعادة المشكلة دون بيانات سرية، والأثر المحتمل، مع إخفاء أي معلومات شخصية من الصور والسجلات.
